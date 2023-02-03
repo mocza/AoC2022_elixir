@@ -8,14 +8,10 @@ defmodule RockPaperScissors do
     opponent: %{"A" => :rock, "B" => :paper, "C" => :scissors},
     mine: %{"X" => :rock, "Y" => :paper, "Z" => :scissors}
   }
-
-  # def solution2_1() do
-  #   read_encrypted("./test/rock_paper_scissors/input.txt")
-  #   |> Enum.map(&(String.split(&1)))
-  #   |> Enum.map(&(decrypt(&1)))
-  #   |> Enum.map(&(score(&1)))
-  #   |> Enum.reduce(0, &(&1 + &2))
-  # end
+  @decrypt2 %{
+    opponent: %{"A" => :rock, "B" => :paper, "C" => :scissors},
+    outcome: %{"X" => :lose, "Y" => :draw, "Z" => :win}
+  }
 
   def play(pair) do
     [opponent, mine] = pair
@@ -31,7 +27,7 @@ defmodule RockPaperScissors do
     @signs[mine][:score] + @scores[play(pair)]
   end
 
-  def decrypt(pair) do
+  def decrypt1(pair) do
     [opponent, mine] = pair
     [@decrypt[:opponent][opponent], @decrypt[:mine][mine]]
   end
@@ -39,5 +35,28 @@ defmodule RockPaperScissors do
   def read_encrypted(path) do
     String.split(File.read!(path), "\n")
   end
+
+  def decrypt2(pair) do
+    [encrypted_opponent, encrypted_outcome] = pair
+    [@decrypt2[:opponent][encrypted_opponent], @decrypt2[:outcome][encrypted_outcome]]
+  end
+
+  def how_to_play_for_outcome(pair) do
+    [opponent, outcome] = pair
+    opponent_wins_against = @signs[opponent][:destroys]
+    [h | _] = Enum.map(Enum.filter(@signs, fn {k, _v} -> k != opponent_wins_against and k != opponent end), fn {k, _v} -> k end)
+    opponent_loses_agains = h
+    cond do
+      outcome == :lose -> [opponent, opponent_wins_against]
+      outcome == :draw -> [opponent, opponent]
+      true -> [opponent, opponent_loses_agains]
+    end
+  end
+
+  def score2(pair) do
+    [opponent, mine] = how_to_play_for_outcome(pair)
+    @signs[mine][:score] + @scores[play([opponent, mine])]
+  end
+
 
 end
