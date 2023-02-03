@@ -1,47 +1,26 @@
 defmodule Aoc2022Elixir do
 
-  def solution1_1 do
-    read_calories("./test/calories01/input.txt")
-    |> partition_calories()
-    |> sum_calories()
-    |> max_calories()
+  def day1_1(file) do
+    CalorieCounting.read_calories(file)
+    |> CalorieCounting.partition_calories()
+    |> CalorieCounting.sum_calories()
+    |> CalorieCounting.max_calories()
   end
 
-  def solution1_2 do
-    read_calories("./test/calories01/input.txt")
-    |> partition_calories()
-    |> sum_calories()
-    |> top_calories(3)
+  def day1_2(file) do
+    CalorieCounting.read_calories(file)
+    |> CalorieCounting.partition_calories()
+    |> CalorieCounting.sum_calories()
+    |> CalorieCounting.top_calories(3)
     |> Enum.sum()
   end
 
-  def top_calories(list, n) do
-    Enum.sort(list)
-    |> Enum.reverse()
-    |> Enum.take(n)
+  def day2_1(file) do
+    RockPaperScissors.read_encrypted(file)
+    |> Enum.map(&(String.split(&1)))
+    |> Enum.map(&(RockPaperScissors.decrypt(&1)))
+    |> Enum.map(&(RockPaperScissors.score(&1)))
+    |> Enum.reduce(0, &(&1 + &2))
   end
 
-  def max_calories(list) do
-    Enum.max(list)
-  end
-
-  def sum_calories(list) do
-    Enum.map(list, fn x -> Enum.sum(x) end)
-  end
-
-  def partition_calories(list) do
-    Enum.reduce(list, [], fn x, acc ->
-      case acc do
-        [] -> [[String.to_integer(x)]]
-        [sublist | rest] when x == "" -> [[]] ++ [sublist] ++ rest
-        [sublist | rest] -> [[String.to_integer(x)] ++ sublist] ++ rest
-      end
-    end)
-    |> Enum.map(fn x -> Enum.reverse(x) end)
-    |> Enum.reverse()
-  end
-
-  def read_calories(filename) do
-    String.split(File.read!(filename), "\n")
-  end
 end

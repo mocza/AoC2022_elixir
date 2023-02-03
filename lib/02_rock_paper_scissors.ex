@@ -9,13 +9,13 @@ defmodule RockPaperScissors do
     mine: %{"X" => :rock, "Y" => :paper, "Z" => :scissors}
   }
 
-  def solution2_1() do
-    read_encrypted("./test/rock_paper_scissors/input.txt")
-    |> Enum.map(&(String.split(&1)))
-    |> Enum.map(&(decrypt(&1)))
-    |> Enum.map(&(score(&1)))
-    |> Enum.reduce(0, &(&1 + &2))
-  end
+  # def solution2_1() do
+  #   read_encrypted("./test/rock_paper_scissors/input.txt")
+  #   |> Enum.map(&(String.split(&1)))
+  #   |> Enum.map(&(decrypt(&1)))
+  #   |> Enum.map(&(score(&1)))
+  #   |> Enum.reduce(0, &(&1 + &2))
+  # end
 
   def play(pair) do
     [opponent, mine] = pair
