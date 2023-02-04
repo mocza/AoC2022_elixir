@@ -54,16 +54,4 @@ defmodule RockPaperScissorsTest do
     assert RockPaperScissors.how_to_play_for_outcome([:scissors, :win]) == [:scissors, :rock]
   end
 
-  test "score2" do
-    assert RockPaperScissors.score2([:rock, :draw]) == 1 + 3
-    assert RockPaperScissors.score2([:rock, :win]) == 2 + 6
-    assert RockPaperScissors.score2([:rock, :lose]) == 3 + 0
-    assert RockPaperScissors.score2([:paper, :draw]) == 2 + 3
-    assert RockPaperScissors.score2([:paper, :lose]) == 1 + 0
-    assert RockPaperScissors.score2([:paper, :win]) == 3 + 6
-    assert RockPaperScissors.score2([:scissors, :draw]) == 3 + 3
-    assert RockPaperScissors.score2([:scissors, :win]) == 1 + 6
-    assert RockPaperScissors.score2([:scissors, :lose]) == 2 + 0
-  end
-
 end

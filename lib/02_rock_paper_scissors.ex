@@ -44,19 +44,12 @@ defmodule RockPaperScissors do
   def how_to_play_for_outcome(pair) do
     [opponent, outcome] = pair
     opponent_wins_against = @signs[opponent][:destroys]
-    [h | _] = Enum.map(Enum.filter(@signs, fn {k, _v} -> k != opponent_wins_against and k != opponent end), fn {k, _v} -> k end)
-    opponent_loses_agains = h
-    cond do
-      outcome == :lose -> [opponent, opponent_wins_against]
-      outcome == :draw -> [opponent, opponent]
-      true -> [opponent, opponent_loses_agains]
+    [opponent_loses_against | _] = Enum.filter(@signs, fn {k, _v} -> k != opponent_wins_against and k != opponent end) |> Enum.map(fn {k, _v} -> k end)
+    case outcome do
+      :lose -> [opponent, opponent_wins_against]
+      :draw -> [opponent, opponent]
+      :win -> [opponent, opponent_loses_against]
     end
   end
-
-  def score2(pair) do
-    [opponent, mine] = how_to_play_for_outcome(pair)
-    @signs[mine][:score] + @scores[play([opponent, mine])]
-  end
-
 
 end

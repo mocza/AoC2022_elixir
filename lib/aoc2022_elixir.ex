@@ -27,7 +27,8 @@ defmodule Aoc2022Elixir do
     RockPaperScissors.read_encrypted(file)
     |> Enum.map(&(String.split(&1)))
     |> Enum.map(&(RockPaperScissors.decrypt2(&1)))
-    |> Enum.map(&(RockPaperScissors.score2(&1)))
+    |> Enum.map(&(RockPaperScissors.how_to_play_for_outcome(&1)))
+    |> Enum.map(&(RockPaperScissors.score(&1)))
     |> Enum.reduce(0, &(&1 + &2))
   end
 
