@@ -32,5 +32,13 @@ defmodule Aoc2022Elixir do
     |> Enum.reduce(0, &(&1 + &2))
   end
 
+  def day3_1(file) do
+    RucksackReorganization.read(file)
+    |> Enum.map(&(RucksackReorganization.compartments(&1)))
+    |> RucksackReorganization.common_items([])
+    |> RucksackReorganization.priority([])
+    |> Enum.reduce(&(&1 + &2))
+  end
+
 
 end
