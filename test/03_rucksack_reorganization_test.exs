@@ -56,4 +56,8 @@ defmodule RucksackReorganizationTest do
     assert RucksackReorganization.priorities([["p", "k"], ["L", "a"], ["P", "e", "g"], ["v"], [], ["s"]], []) == [[16, 11], [38,1], [42, 5, 7], [22], [], [19]]
   end
 
+  test "find badge" do
+    assert RucksackReorganization.find_badge(["vJrwpWtwJgWrhcsFMMfFFhFp", "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL", "PmmdzqPrVvPwwTWBwg"]) == ["r"]
+  end
+
 end

@@ -63,4 +63,10 @@ defmodule RucksackReorganization do
     String.split(File.read!(path), "\n")
   end
 
+  def find_badge(rucksacks) do
+    [rucksack1, rucksack2, rucksack3] = rucksacks
+    common1 = Enum.uniq(Enum.filter(String.codepoints(rucksack1), &(&1 in String.codepoints(rucksack2))))
+    Enum.filter(String.codepoints(Enum.join(common1)), &(&1 in String.codepoints(rucksack3)))
+  end
+
 end
