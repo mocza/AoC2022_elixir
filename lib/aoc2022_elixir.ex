@@ -48,5 +48,12 @@ defmodule Aoc2022Elixir do
     |> Enum.reduce(&(&1 + &2))
   end
 
+  def day4_1(file) do
+    CampCleanup.read(file)
+    |> Enum.map(&(String.split(&1, ",")))
+    |> Enum.map(&(CampCleanup.fully_overlap?(&1)))
+    |> Enum.count(&(&1 == true))
+  end
+
 
 end

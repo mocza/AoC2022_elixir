@@ -9,6 +9,7 @@ defmodule Aoc2022ElixirTest do
     assert Aoc2022Elixir.day2_2("./test/02_input.txt") == 14859
     assert Aoc2022Elixir.day3_1("./test/03_input.txt") == 7845
     assert Aoc2022Elixir.day3_2("./test/03_input.txt") == 2790
+    assert Aoc2022Elixir.day4_1("./test/04_input.txt") == 562
   end
 
 
