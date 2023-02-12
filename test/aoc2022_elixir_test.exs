@@ -11,6 +11,7 @@ defmodule Aoc2022ElixirTest do
     assert Aoc2022Elixir.day3_2("./test/03_input.txt") == 2790
     assert Aoc2022Elixir.day4_1("./test/04_input.txt") == 562
     assert Aoc2022Elixir.day4_2("./test/04_input.txt") == 924
+    assert Aoc2022Elixir.day5_1("./test/05_input.txt") == "" #JWLSMDCPV
   end
 
 

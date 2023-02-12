@@ -62,5 +62,25 @@ defmodule Aoc2022Elixir do
     |> Enum.count(&(&1 == true))
   end
 
+  def day5_1(file) do
+    stacks = %{}
+    stacks = Map.put(stacks, 1, SupplyStacks.Stack.new(["P", "G", "R", "N"]))
+    stacks = Map.put(stacks, 2, SupplyStacks.Stack.new(["C", "D", "G", "F", "L", "B", "T", "J"]))
+    stacks = Map.put(stacks, 3, SupplyStacks.Stack.new(["V", "S", "M"]))
+    stacks = Map.put(stacks, 4, SupplyStacks.Stack.new(["P", "Z", "C", "R", "S", "L"]))
+    stacks = Map.put(stacks, 5, SupplyStacks.Stack.new(["Q", "D", "W", "C", "V", "L", "S", "P"]))
+    stacks = Map.put(stacks, 6, SupplyStacks.Stack.new(["S", "M", "D", "W", "N", "T", "C"]))
+    stacks = Map.put(stacks, 7, SupplyStacks.Stack.new(["P", "W", "G", "D", "H"]))
+    stacks = Map.put(stacks, 8, SupplyStacks.Stack.new(["V", "M", "C", "S", "H", "P", "L", "Z"]))
+    stacks = Map.put(stacks, 9, SupplyStacks.Stack.new(["Z", "G", "W", "L", "F", "P", "R"]))
+
+    SupplyStacks.read_operations(file)
+    # |> Enum.take(16)
+    |> Enum.map(&(SupplyStacks.parse(&1)))
+    |> Enum.reduce(stacks, &(SupplyStacks.move(&2, &1)))
+    |> Enum.reduce([], fn {_, value}, acc -> [hd(value) | acc] end)
+    |> Enum.join()
+  end
+
 
 end
