@@ -75,9 +75,9 @@ defmodule Aoc2022Elixir do
     stacks = Map.put(stacks, 9, SupplyStacks.Stack.new(["Z", "G", "W", "L", "F", "P", "R"]))
 
     SupplyStacks.read_operations(file)
-    # |> Enum.take(16)
     |> Enum.map(&(SupplyStacks.parse(&1)))
     |> Enum.reduce(stacks, &(SupplyStacks.move(&2, &1)))
+    |> Enum.sort(fn {key1, _val1}, {key2, _val2} -> key1 > key2 end)
     |> Enum.reduce([], fn {_, value}, acc -> [hd(value) | acc] end)
     |> Enum.join()
   end
