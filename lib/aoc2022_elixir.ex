@@ -62,44 +62,26 @@ defmodule Aoc2022Elixir do
     |> Enum.count(&(&1 == true))
   end
 
-  def day5_1(file) do
-    stacks = %{}
-    stacks = Map.put(stacks, 1, SupplyStacks.Stack.new(["P", "G", "R", "N"]))
-    stacks = Map.put(stacks, 2, SupplyStacks.Stack.new(["C", "D", "G", "F", "L", "B", "T", "J"]))
-    stacks = Map.put(stacks, 3, SupplyStacks.Stack.new(["V", "S", "M"]))
-    stacks = Map.put(stacks, 4, SupplyStacks.Stack.new(["P", "Z", "C", "R", "S", "L"]))
-    stacks = Map.put(stacks, 5, SupplyStacks.Stack.new(["Q", "D", "W", "C", "V", "L", "S", "P"]))
-    stacks = Map.put(stacks, 6, SupplyStacks.Stack.new(["S", "M", "D", "W", "N", "T", "C"]))
-    stacks = Map.put(stacks, 7, SupplyStacks.Stack.new(["P", "W", "G", "D", "H"]))
-    stacks = Map.put(stacks, 8, SupplyStacks.Stack.new(["V", "M", "C", "S", "H", "P", "L", "Z"]))
-    stacks = Map.put(stacks, 9, SupplyStacks.Stack.new(["Z", "G", "W", "L", "F", "P", "R"]))
+  @day5_input %{1 => ["P", "G", "R", "N"], 2 => ["C", "D", "G", "F", "L", "B", "T", "J"],
+  3 => ["V", "S", "M"], 4 => ["P", "Z", "C", "R", "S", "L"],
+  5 => ["Q", "D", "W", "C", "V", "L", "S", "P"], 6 => ["S", "M", "D", "W", "N", "T", "C"],
+  7 => ["P", "W", "G", "D", "H"], 8 => ["V", "M", "C", "S", "H", "P", "L", "Z"],
+  9 => ["Z", "G", "W", "L", "F", "P", "R"]}
 
+  def day5(file, move_fn) do
     SupplyStacks.read_operations(file)
     |> Enum.map(&(SupplyStacks.parse(&1)))
-    |> Enum.reduce(stacks, &(SupplyStacks.move(&2, &1)))
+    |> Enum.reduce(@day5_input, fn operation, stack -> move_fn.(stack, operation) end)
     |> Enum.sort(fn {key1, _val1}, {key2, _val2} -> key1 > key2 end)
     |> Enum.reduce([], fn {_, value}, acc -> [hd(value) | acc] end)
     |> Enum.join()
   end
+  def day5_1(file) do
+    day5(file, &SupplyStacks.move/2)
+  end
 
   def day5_2(file) do
-    stacks = %{}
-    stacks = Map.put(stacks, 1, SupplyStacks.Stack.new(["P", "G", "R", "N"]))
-    stacks = Map.put(stacks, 2, SupplyStacks.Stack.new(["C", "D", "G", "F", "L", "B", "T", "J"]))
-    stacks = Map.put(stacks, 3, SupplyStacks.Stack.new(["V", "S", "M"]))
-    stacks = Map.put(stacks, 4, SupplyStacks.Stack.new(["P", "Z", "C", "R", "S", "L"]))
-    stacks = Map.put(stacks, 5, SupplyStacks.Stack.new(["Q", "D", "W", "C", "V", "L", "S", "P"]))
-    stacks = Map.put(stacks, 6, SupplyStacks.Stack.new(["S", "M", "D", "W", "N", "T", "C"]))
-    stacks = Map.put(stacks, 7, SupplyStacks.Stack.new(["P", "W", "G", "D", "H"]))
-    stacks = Map.put(stacks, 8, SupplyStacks.Stack.new(["V", "M", "C", "S", "H", "P", "L", "Z"]))
-    stacks = Map.put(stacks, 9, SupplyStacks.Stack.new(["Z", "G", "W", "L", "F", "P", "R"]))
-
-    SupplyStacks.read_operations(file)
-    |> Enum.map(&(SupplyStacks.parse(&1)))
-    |> Enum.reduce(stacks, &(SupplyStacks.move2(&2, &1)))
-    |> Enum.sort(fn {key1, _val1}, {key2, _val2} -> key1 > key2 end)
-    |> Enum.reduce([], fn {_, value}, acc -> [hd(value) | acc] end)
-    |> Enum.join()
+    day5(file, &SupplyStacks.move2/2)
   end
 
 
