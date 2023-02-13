@@ -8,7 +8,7 @@ defmodule SupplyStacksTest do
   7 => ["P", "W", "G", "D", "H"], 8 => ["V", "M", "C", "S", "H", "P", "L", "Z"],
   9 => ["Z", "G", "W", "L", "F", "P", "R"]}
 
-  test "move" do
+  test "move one at a time" do
     assert SupplyStacks.move(@stacks, {1, 2}) == %{1 => ["G", "R", "N"], 2 => ["P", "C", "D", "G", "F", "L", "B", "T", "J"],
       3 => ["V", "M", "C", "S", "H", "P", "L", "Z", "O", "X"]}
     assert SupplyStacks.move(@stacks, {0, 1, 2}) == %{1 => ["P", "G", "R", "N"], 2 => ["C", "D", "G", "F", "L", "B", "T", "J"],
@@ -41,13 +41,30 @@ defmodule SupplyStacksTest do
     9 => ["Z", "G", "W", "L", "F", "P", "R"]}
   end
 
+  test "first n elements in a list" do
+    assert SupplyStacks.Stack.first_n([0, 1, 2, 3], 2) == [0, 1]
+  end
+
+  test "stack operations" do
+    assert SupplyStacks.Stack.top(SupplyStacks.Stack.new([0, 1, 2, 3]), 3) == {:ok, [0, 1, 2]}
+    assert SupplyStacks.Stack.pop(SupplyStacks.Stack.new([0, 1, 2, 3]), 3) == {:ok, [3]}
+  end
+
+  test "move n at a time" do
+    assert SupplyStacks.move2(@stacks, {0, 1, 2}) == %{1 => ["P", "G", "R", "N"], 2 => ["C", "D", "G", "F", "L", "B", "T", "J"],
+    3 => ["V", "M", "C", "S", "H", "P", "L", "Z", "O", "X"]}
+    assert SupplyStacks.move2(@stacks, {1, 1, 2}) == %{1 => ["G", "R", "N"], 2 => ["P", "C", "D", "G", "F", "L", "B", "T", "J"],
+      3 => ["V", "M", "C", "S", "H", "P", "L", "Z", "O", "X"]}
+    assert SupplyStacks.move2(@stacks, {2, 1, 2}) == %{1 => ["R", "N"], 2 => ["P", "G", "C", "D", "G", "F", "L", "B", "T", "J"],
+      3 => ["V", "M", "C", "S", "H", "P", "L", "Z", "O", "X"]}
+  end
 
   # test "read operations from file" do
   #   assert SupplyStacks.read("./test/05_input.txt") == {}
   # end
 
-  # test "parse operation" do
-  #   assert SupplyStacks.parse("move 5 from 1 to 10") == {5, 1, 10}
-  # end
+  test "parse operation" do
+    assert SupplyStacks.parse("move 5 from 1 to 10") == {5, 1, 10}
+  end
 
 end
