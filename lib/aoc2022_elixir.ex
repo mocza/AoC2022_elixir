@@ -84,5 +84,10 @@ defmodule Aoc2022Elixir do
     day5(file, &SupplyStacks.move2/2)
   end
 
+  def day6_1(file) do
+    TuningTrouble.read(file)
+    |> TuningTrouble.marker_pos()
+  end
+
 
 end
