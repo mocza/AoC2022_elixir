@@ -86,7 +86,12 @@ defmodule Aoc2022Elixir do
 
   def day6_1(file) do
     TuningTrouble.read(file)
-    |> TuningTrouble.marker_pos()
+    |> TuningTrouble.marker_pos(:packet)
+  end
+
+  def day6_2(file) do
+    TuningTrouble.read(file)
+    |> TuningTrouble.marker_pos(:message)
   end
 
 
