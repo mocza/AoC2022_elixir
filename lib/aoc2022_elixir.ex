@@ -94,5 +94,13 @@ defmodule Aoc2022Elixir do
     |> TuningTrouble.marker_pos(:message)
   end
 
+  def day7_1(file) do
+    NoSpaceLeft.read(file)
+    |> NoSpaceLeft.parse()
+    |> NoSpaceLeft.size()
+    |> Enum.filter(fn {_id, %{dir: dir, size: size}} -> dir == true && size < 100000 end)
+    |> Enum.reduce(0, fn {_id, %{size: size}}, acc -> acc + size end)
+  end
+
 
 end
