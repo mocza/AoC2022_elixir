@@ -146,14 +146,27 @@ defmodule NoSpaceLeft do
   def smallest_dir_to_delete(filesystem, free_space_required, total_disk_space_available) do
     current_free_space = total_disk_space_available - filesystem[0].size
     need_to_free_up = free_space_required - current_free_space
-    IO.inspect binding()
     if need_to_free_up <= 0 do
       nil
     else
-        filesystem
-        |> Enum.filter(fn {_, %{size: size}} -> size >= need_to_free_up end)
-        |> Enum.min_by(fn {_, %{size: size}} -> size end)
+        # min_dir_size_comprehension(filesystem, need_to_free_up)
+        min_dir_size_enumerate(filesystem, need_to_free_up)
     end
+  end
+
+  defp min_dir_size_enumerate(filesystem, need_to_free_up) do
+      filesystem
+      |> Map.values()
+      |> Enum.filter(& &1.size >= need_to_free_up)
+      |> Enum.min_by(& &1.size)
+      |> Map.get(:size)
+  end
+
+  defp min_dir_size_comprehension(filesystem, need_to_free_up) do
+    min_dir_id = for {id, dir} <- filesystem, dir.size >= need_to_free_up, reduce: 0 do
+      acc -> if dir.size < filesystem[acc].size do id else acc end
+    end
+    filesystem[min_dir_id].size
   end
 
 end

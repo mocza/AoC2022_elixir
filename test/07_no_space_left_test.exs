@@ -6,7 +6,7 @@ defmodule NoSpaceLeftTest do
       0 => %{dir: true, name: "/", parent: nil, size: 48381165},
       1 => %{dir: true, name: "a", parent: 0, size: 94853},
       4 => %{dir: true, name: "d", parent: 0, size: 24933642},
-      5 => %{dir: true, name: "e", parent: 1, size: 584}},30000000, 70000000) == {4, %{dir: true, name: "d", parent: 0, size: 24933642}}
+      5 => %{dir: true, name: "e", parent: 1, size: 584}},30000000, 70000000) == 24933642
   end
 
   test "filter, reduce" do
