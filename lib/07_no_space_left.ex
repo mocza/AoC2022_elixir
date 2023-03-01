@@ -143,4 +143,17 @@ defmodule NoSpaceLeft do
     String.split(File.read!(file), "\n")
   end
 
+  def smallest_dir_to_delete(filesystem, free_space_required, total_disk_space_available) do
+    current_free_space = total_disk_space_available - filesystem[0].size
+    need_to_free_up = free_space_required - current_free_space
+    IO.inspect binding()
+    if need_to_free_up <= 0 do
+      nil
+    else
+        filesystem
+        |> Enum.filter(fn {_, %{size: size}} -> size >= need_to_free_up end)
+        |> Enum.min_by(fn {_, %{size: size}} -> size end)
+    end
+  end
+
 end

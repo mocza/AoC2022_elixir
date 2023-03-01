@@ -16,6 +16,7 @@ defmodule Aoc2022ElixirTest do
     assert Aoc2022Elixir.day6_1("./test/06_input.txt") == 1100
     assert Aoc2022Elixir.day6_2("./test/06_input.txt") == 2421
     assert Aoc2022Elixir.day7_1("./test/07_input.txt") == 1447046
+    assert Aoc2022Elixir.day7_2("./test/07_input.txt") == nil
   end
 
 

@@ -102,5 +102,12 @@ defmodule Aoc2022Elixir do
     |> Enum.reduce(0, fn {_id, %{size: size}}, acc -> acc + size end)
   end
 
+  def day7_2(file) do
+    NoSpaceLeft.read(file)
+    |> NoSpaceLeft.parse()
+    |> NoSpaceLeft.size()
+    |> NoSpaceLeft.smallest_dir_to_delete(30000000, 70000000)
+  end
+
 
 end

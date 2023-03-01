@@ -1,6 +1,14 @@
 defmodule NoSpaceLeftTest do
   use ExUnit.Case
 
+  test "smallest dir to delete" do
+    assert NoSpaceLeft.smallest_dir_to_delete(%{
+      0 => %{dir: true, name: "/", parent: nil, size: 48381165},
+      1 => %{dir: true, name: "a", parent: 0, size: 94853},
+      4 => %{dir: true, name: "d", parent: 0, size: 24933642},
+      5 => %{dir: true, name: "e", parent: 1, size: 584}},30000000, 70000000) == {4, %{dir: true, name: "d", parent: 0, size: 24933642}}
+  end
+
   test "filter, reduce" do
     # assert NoSpaceLeft.parse(["$ cd /", "$ ls", "dir a", "14848514 b.txt", "8504156 c.dat", "dir d", "$ cd a", "$ ls", "dir e", "29116 f", "2557 g", "62596 h.lst", "$ cd e", "$ ls", "584 i", "$ cd ..", "$ cd ..", "$ cd d", "$ ls", "4060174 j", "8033020 d.log", "5626152 d.ext", "7214296 k"])
     # |> Enum.filter(fn {_id, %{dir: dir, size: size}} -> dir == true && size <= 100000 end)
