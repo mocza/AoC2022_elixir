@@ -109,5 +109,11 @@ defmodule Aoc2022Elixir do
     |> NoSpaceLeft.smallest_dir_to_delete(30000000, 70000000)
   end
 
+  def day8_1(file) do
+    grid = TreetopTreehouse.read(file) |> TreetopTreehouse.parse()
+    visible_in_interior = TreetopTreehouse.visible(grid) |> Enum.count()
+    TreetopTreehouse.visible_on_edge(grid) + visible_in_interior
+  end
+
 
 end
