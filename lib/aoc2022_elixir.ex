@@ -115,5 +115,23 @@ defmodule Aoc2022Elixir do
     TreetopTreehouse.visible_on_edge(grid) + visible_in_interior
   end
 
+  def day8_2(file) do
+    top_score_tree = TreetopTreehouse.read(file)
+    |> TreetopTreehouse.parse()
+    |> TreetopTreehouse.scenic_score()
+    # |> Map.values()
+    # |> Enum.flat_map(&Map.values()/1)
+    # |> Enum.map(& &1[:score])
+    # |> Enum.max_by(& &1)
+    |> Enum.flat_map(fn {row_id, row} -> row
+    |> Enum.flat_map(fn {col_id, values} -> values
+    |> Enum.map(fn {key, value} -> {{row_id, col_id, key}, value}
+    end) end) end)
+    |> Enum.filter(fn {{_, _, k}, _} -> k == :score end)
+    |> Enum.max_by(fn {{_, _, _}, v} -> v end)
+    {{_, _, _}, score} = top_score_tree
+    score
+  end
+
 
 end
