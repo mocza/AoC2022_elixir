@@ -133,5 +133,14 @@ defmodule Aoc2022Elixir do
     score
   end
 
+  def day9_1(file) do
+    # moves = RopeBridge.read(file)
+    # |> RopeBridge.move()
+    # tail_move_counts = for {rh, rt} <- moves, reduce: %{} do
+    #   acc -> if Map.get(acc, rt) == nil do Map.put(acc, rt, 1) else Map.put(acc, rt, Map.get(acc, rt) + 1) end
+    # end
+    # map_size(tail_move_counts)
+  end
+
 
 end
