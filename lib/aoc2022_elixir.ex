@@ -137,6 +137,9 @@ defmodule Aoc2022Elixir do
     moves = RopeBridge.read(file)
     |> RopeBridge.parse()
     |> RopeBridge.move()
+    for {key, _value} <- moves, key != :tail and key != :head, reduce: 0 do
+      acc -> acc + 1
+    end
     # File.stream!(file, :line)
     # |> Stream.each(&RopeBridge.parse_move/1)
     # |> Stream.run()
