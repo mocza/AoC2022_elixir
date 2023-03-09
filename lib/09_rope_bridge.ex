@@ -36,32 +36,12 @@ defmodule RopeBridge do
     end
   end
 
-  def move_loop(positions, direction, steps) do
-    if steps > 0 do
-      for _count <- 1..steps, reduce: positions do
-        acc ->
-          {new_head, new_tail} = new_position(acc[:head], acc[:tail], direction)
-          acc = Map.put(acc, :head, new_head)
-          tail = acc[:tail]
-          acc = case new_tail do
-            ^tail -> acc
-            _ -> Map.update(acc, new_tail, 1, &(&1 + 1))
-          end
-          Map.put(acc, :tail, new_tail)
-      end
-    else
-      positions
-    end
-  end
-
   defp new_position(head, tail, direction) do
     {hx, hy} = head
     case direction do
       "R" ->
         move_head = &({&1, &2 + 1})
-        ret = {move_head.(hx, hy), move_tail(head, tail, move_head)}
-        # IO.inspect(binding())
-        ret
+        {move_head.(hx, hy), move_tail(head, tail, move_head)}
       "L" ->
         move_head = &({&1, &2 - 1})
         {move_head.(hx, hy), move_tail(head, tail, move_head)}
