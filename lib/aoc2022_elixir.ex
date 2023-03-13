@@ -134,19 +134,24 @@ defmodule Aoc2022Elixir do
   end
 
   def day9_1(file) do
+    knot_count = 2
     moves = RopeBridge.read(file)
     |> RopeBridge.parse()
-    |> RopeBridge.move()
-    for {key, _value} <- moves, key != :tail and key != :head, reduce: 0 do
-      acc -> acc + 1
-    end
-    # File.stream!(file, :line)
-    # |> Stream.each(&RopeBridge.parse_move/1)
-    # |> Stream.run()
-    # tail_move_counts = for {rh, rt} <- moves, reduce: %{} do
-    #   acc -> if Map.get(acc, rt) == nil do Map.put(acc, rt, 1) else Map.put(acc, rt, Map.get(acc, rt) + 1) end
+    |> RopeBridge.move_rope(knot_count)
+    map_size(moves) - knot_count
+  end
+
+  def day9_2(file) do
+    # moves = RopeBridge.read(file)
+    # |> RopeBridge.parse()
+    # |> RopeBridge.move_10_knots()
+    # for {key, _value} <- moves, reduce: 0 do
+    #   acc ->
+    #     case key do
+    #       {_, _} -> acc + 1
+    #       true -> acc
+    #     end
     # end
-    # map_size(tail_move_counts)
   end
 
 
