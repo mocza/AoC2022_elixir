@@ -14,15 +14,7 @@ defmodule RopeBridge do
     {direction, String.to_integer(steps)}
   end
 
-  def move(input) do
-    # IO.inspect(binding())
-    start = %{{1, 1} =>1, head: {1, 1}, tail: {1, 1}}
-    for {direction, steps} <- input, reduce: start do
-      acc -> move(acc, direction, steps)
-    end
-  end
-
-  def move_rope(input, knot_count) do
+  def move(input, knot_count) do
     # IO.inspect(binding())
     start = initial_state(knot_count)
     for {direction, steps} <- input, reduce: start do
@@ -31,7 +23,8 @@ defmodule RopeBridge do
   end
 
   defp initial_state(knot_count) do
-    for knot_id <- 0..knot_count-1, into: %{{1, 1} => 1}, do: {knot_id, {1, 1}}
+    knots = for knot_id <- 0..knot_count-1, into: %{}, do: {knot_id, {1, 1}}
+    %{knots: knots, visits: %{{1, 1} => 1}}
   end
 
   def move(moves, direction, steps) do
@@ -40,12 +33,12 @@ defmodule RopeBridge do
       _ ->
         head_id = 0
         tail_id = 1
-        {new_head, new_tail} = new_position(moves[head_id], moves[tail_id], direction)
-        tail = moves[tail_id]
-        moves
-        |> Map.put(head_id, new_head)
-        |> Map.update(new_tail, 1, fn value -> if new_tail != tail do value + 1 else value end end)
-        |> Map.put(tail_id, new_tail)
+        tail = moves[:knots][tail_id]
+        {new_head, new_tail} = new_position(moves[:knots][head_id], tail, direction)
+        updated_head = moves
+        |> Map.put(:knots, Map.put(moves[:knots], head_id, new_head))
+        |> Map.put(:visits, Map.update(moves[:visits], new_tail, 1, fn value -> if new_tail != tail do value + 1 else value end end))
+        updated_head |> Map.put(:knots, Map.put(updated_head[:knots], tail_id, new_tail))
         |> move(direction, steps - 1)
     end
   end
