@@ -57,16 +57,16 @@ defmodule RopeBridge do
     {hx, hy} = head
     case direction do
       "R" ->
-        move_head = &({&1, &2 + 1})
-        {move_head.(hx, hy), move_tail(head, tail, move_head)}
-      "L" ->
-        move_head = &({&1, &2 - 1})
-        {move_head.(hx, hy), move_tail(head, tail, move_head)}
-      "U" ->
         move_head = &({&1 + 1, &2})
         {move_head.(hx, hy), move_tail(head, tail, move_head)}
-      "D" ->
+      "L" ->
         move_head = &({&1 - 1, &2})
+        {move_head.(hx, hy), move_tail(head, tail, move_head)}
+      "U" ->
+        move_head = &({&1, &2 + 1})
+        {move_head.(hx, hy), move_tail(head, tail, move_head)}
+      "D" ->
+        move_head = &({&1, &2 - 1})
         {move_head.(hx, hy), move_tail(head, tail, move_head)}
     end
   end
